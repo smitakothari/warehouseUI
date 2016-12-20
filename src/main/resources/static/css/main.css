@@ -1,0 +1,14 @@
+
+body{
+
+    background-color:blanchedalmond;
+    /*background-image: url("../images/background.jpg");*/
+    /*background-repeat: repeat-x;*/
+}
+
+
+#test{
+
+    padding-top: 10%;
+    padding-left: 20%;
+}
