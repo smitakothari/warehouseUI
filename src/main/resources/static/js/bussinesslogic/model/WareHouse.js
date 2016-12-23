@@ -4,7 +4,7 @@
 var $ = require('jquery');
 
 const DEFAULT_TIMEOUT = 10000;
-const url = "http://localhost:9000/warehouse";
+const url = "https://product-cat.herokuapp.com/warehouse";
 let output = '';
 class WareHouse {
 
