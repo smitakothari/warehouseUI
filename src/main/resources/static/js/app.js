@@ -1,7 +1,8 @@
 var React = require('react');
 const ReactDOM = require('react-dom');
 var AppTest = require('./AppTest');
-var TestForm = require('./bussinesslogic/components/TestForm')
+var TestForm = require('./bussinesslogic/components/TestForm');
+var FindWarehouseForm = require('./bussinesslogic/components/FindWarehouseForm')
 var welcomeText = React.createClass({
 
     getInitialState: function () {
@@ -17,6 +18,7 @@ var welcomeText = React.createClass({
         <div>
             {/*<AppTest></AppTest>*/}
             <TestForm></TestForm>
+            {/*<FindWarehouseForm></FindWarehouseForm>*/}
         </div>
     </div>
                     );

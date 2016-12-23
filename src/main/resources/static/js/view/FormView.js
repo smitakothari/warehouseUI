@@ -18,17 +18,17 @@ const ViewTestForm = React.createClass({
             <div className="container">
             <form  className="" onSubmit={this.formSubmit}>
 
-                <WarehouseMainForm label={this.props.wareHouseNameLabel}
+                <WarehouseMainForm label={this.props.dynamicContent.wareHouseNameLabel}
                                    placeHolderText={this.props.wareHouseName}
                                    onChange = {this.props.onChangeName}
                             />
-                <WarehouseMainForm label={this.props.wareHouseNumberLabel}
+                <WarehouseMainForm label={this.props.dynamicContent.wareHouseNumberLabel}
                                    placeHolderText={this.props.wareHouseNumber}
                                    onChange = {this.props.onChangeNumber}
                 />
 
-                {/*<WarehouseMainForm label={this.props.dynamicContent.wareHouseBookedLabel}*/}
-                                   {/*placeHolderText={this.props.wareHouseBooked}  />*/}
+                <WarehouseMainForm label={this.props.dynamicContent.wareHouseBookedLabel}
+                                   placeHolderText={this.props.wareHouseBooked}  />
                 <button type="submit" className="localization__input-submit"
                         data-submit>{this.props.buttonText}</button>
 
