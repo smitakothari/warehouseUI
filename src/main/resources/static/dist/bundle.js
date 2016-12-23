@@ -21692,15 +21692,14 @@
 	    render: function () {
 
 	        var values = this.props.results.map(function (value) {
-	            return React.createElement("div", null, React.createElement("span", null, value.warehouseNumber, "  "), React.createElement("button", null, " book"));
+	            return React.createElement("div", null, React.createElement("span", null, value.customerName, "  "), React.createElement("span", null, value.warehouseNumber, "  "), React.createElement("span", null, value.date, "  "), React.createElement("button", null, " book"), React.createElement("br", null), React.createElement("div", null, "-------------------------------------------------"));
 	        });
 
 	        return React.createElement("div", { className: "container" },
 	        /*{this.props.results.map(function(name, index){*/
 	        /*return <li key={ index }>{name}</li>;*/
 	        /*})}*/
-
-	        React.createElement("div", null, "Welcome to search results"),
+	        React.createElement("br", null), React.createElement("br", null), React.createElement("div", null, "************************************"), React.createElement("div", null, "Welcome to search results"), React.createElement("div", null, React.createElement("span", null, "Customer Name  "), React.createElement("span", null, "Warehouse Number   "), React.createElement("span", null, "Date  "), React.createElement("button", null, " book")),
 
 	        /*{JSON.stringify(this.props.results)};*/
 	        values, ";");
