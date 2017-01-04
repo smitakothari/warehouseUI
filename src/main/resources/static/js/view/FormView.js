@@ -4,6 +4,7 @@
 var  React = require("react") ;
 
 var WarehouseMainForm = require("./WarehouseMainForm");
+var SearchMainForm = require("./SearchMainForm");
 
 
 
@@ -16,24 +17,22 @@ const ViewTestForm = React.createClass({
     render(){
         return (
             <div className="container">
+                <div className="searchMainDiv">
             <form  className="" onSubmit={this.formSubmit}>
 
-                <WarehouseMainForm label={this.props.dynamicContent.wareHouseNameLabel}
+                <SearchMainForm label={this.props.dynamicContent.wareHouseNameLabel}
                                    placeHolderText={this.props.wareHouseName}
                                    onChange = {this.props.onChangeName}
                             />
-                <WarehouseMainForm label={this.props.dynamicContent.wareHouseNumberLabel}
-                                   placeHolderText={this.props.wareHouseNumber}
-                                   onChange = {this.props.onChangeNumber}
-                />
 
-                <WarehouseMainForm label={this.props.dynamicContent.wareHouseBookedLabel}
-                                   placeHolderText={this.props.wareHouseBooked}  />
-                <button type="submit" className="localization__input-submit"
-                        data-submit>{this.props.buttonText}</button>
+                <button type="submit" className="localization__input-submit btn btn-info searchBtn"
+                        data-submit>{this.props.buttonText}
+                    <span className="glyphicon glyphicon-search"></span>
+                </button>
 
 
             </form>
+                </div>
             </div>
         );
     }

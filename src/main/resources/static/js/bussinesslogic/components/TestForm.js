@@ -5,6 +5,7 @@
 var  React = require("react") ;
 var ViewTestForm =  require("../../view/FormView");
 var SearchResults =  require("../../view/SearchResults");
+var HeaderSection =  require("../../view/HeaderSection");
 const ResolveAvailability = require("../services/Details");
 
 const OBJECT_PROP_DEFAULTS = {
@@ -104,12 +105,13 @@ const TestForm = React.createClass({
         return (
             <div>
                 {/*<button>Find All</button>*/}
+                <HeaderSection></HeaderSection>
                 <ViewTestForm
                     wareHouseName={this.state.wareHouseName}
                     wareHouseNumber={this.state.wareHouseNumber}
                     wareHouseBooked={this.state.wareHouseBooked}
                     dynamicContent={dynamicContent}
-                    buttonText="Search"
+                    buttonText="Search  "
                     onSubmit={this.OnSubmitHandler}
                     onChangeName={this.OnChangeHandler}
                     onChangeNumber= {this.OnChangeHandler1}

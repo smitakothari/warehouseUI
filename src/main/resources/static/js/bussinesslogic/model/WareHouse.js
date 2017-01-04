@@ -4,7 +4,7 @@
 var $ = require('jquery');
 
 const DEFAULT_TIMEOUT = 10000;
-const url = "https://product-cat.herokuapp.com/warehouse";
+const url = "http://localhost:9000/warehouse/wareHouseNumberDetails/";
 let output = '';
 class WareHouse {
 
@@ -27,7 +27,7 @@ class WareHouse {
         $.ajax({
             type: 'GET',
             url: url,
-            data: formData,
+            data: {"wareHouseNumber":"233"},
             contentType: 'application/json',
             success: function (data) {
                 console.log('url:' + url);
