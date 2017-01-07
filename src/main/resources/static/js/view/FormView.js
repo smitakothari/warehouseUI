@@ -23,6 +23,9 @@ const ViewTestForm = React.createClass({
                 <SearchMainForm label={this.props.dynamicContent.wareHouseNameLabel}
                                    placeHolderText={this.props.wareHouseName}
                                    onChange = {this.props.onChangeName}
+                                onChangeSelect = {this.props.onChangeSelect}
+                                selected = {this.props.selected}
+                                s1 = {this.props.s1}
                             />
 
                 <button type="submit" className="localization__input-submit btn btn-info searchBtn"

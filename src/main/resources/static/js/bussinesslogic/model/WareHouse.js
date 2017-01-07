@@ -4,11 +4,13 @@
 var $ = require('jquery');
 
 const DEFAULT_TIMEOUT = 10000;
-const url = "http://localhost:9000/warehouse/wareHouseNumberDetails/";
-let output = '';
+
+
 class WareHouse {
 
-    getDetails(formData) {
+
+
+    getDetails(url) {
         // $.ajax({
         //      type: 'POST',
         //     url: url,
@@ -23,22 +25,32 @@ class WareHouse {
         //         console.log('failed to register');
         //     }
         // })
+  // let data =[];
+        // data = Object.keys(formData).map(key => formData[key])
+        //
+        // const url = "http://localhost:9000/warehouse/wareHouseNumber/" +data[0];
+        // console.log(Object.keys(formData).map(key => formData[key]));
+        console.log('url:' + url);
+        function testAjax() {
 
-        $.ajax({
-            type: 'GET',
-            url: url,
-            data: {"wareHouseNumber":"233"},
-            contentType: 'application/json',
-            success: function (data) {
-                console.log('url:' + url);
-                console.log('success:' + data[0].warehouseNumber);
-                output=data;
-            },
-            error: function () {
-                console.log('failed to register');
-            }
-        })
+            return $.ajax({
+                type: 'GET',
+                url: url,
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log('url:' + url);
+                    console.log('success:' + data[0].warehouseNumber);
 
+                    // output=data;
+                    // console.log('output:' + output);
+                },
+                error: function () {
+                    console.log('failed to register');
+                }
+            })
+        }
+
+        var output = testAjax();
         return output;
     }
 }

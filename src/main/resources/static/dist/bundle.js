@@ -21506,17 +21506,22 @@
 	                      */
 
 	var React = __webpack_require__(2);
-	var ViewTestForm = __webpack_require__(181);
-	var SearchResults = __webpack_require__(184);
-	var HeaderSection = __webpack_require__(185);
-	const ResolveAvailability = __webpack_require__(186);
+	var $ = __webpack_require__(181);
+	var ViewTestForm = __webpack_require__(182);
+	var SearchResults = __webpack_require__(185);
+	var HeaderSection = __webpack_require__(186);
+	const ResolveAvailability = __webpack_require__(187);
+
+	var searchParameter = ['Customer Name', 'Warehouse Number', 'Date'];
 
 	const OBJECT_PROP_DEFAULTS = {
 	    defaultValues: {
 	        wareHouseName: "",
 	        wareHouseNumber: "",
 	        wareHouseBooked: "",
-	        searchRes: []
+	        searchRes: [],
+	        selected: "",
+	        searchParameters: ['Customer Name', 'Warehouse Number', 'Date']
 
 	    },
 
@@ -21547,6 +21552,11 @@
 	        };
 	    },
 
+	    generateURL: function () {
+	        let url = "http://localhost:9000/warehouse/" + this.state.selected + "/" + this.state.wareHouseName;
+	        return url;
+	    },
+
 	    preserveObjectPropDefaults: function (key) {
 	        const obj = Object.assign({}, OBJECT_PROP_DEFAULTS[key], this.props[key]);
 
@@ -21563,15 +21573,16 @@
 	    OnSubmitHandler: function (e) {
 	        e.preventDefault();
 	        console.log(this.state.wareHouseNumber);
-	        const formDataFields = JSON.stringify({
+	        const formDataFields = {
 	            "customerName": this.state.wareHouseName,
 	            "warehouseNumber": this.state.wareHouseNumber
-	        });
+	        };
 
-	        console.log(formDataFields);
+	        // console.log(formDataFields);
 
 	        // const responsePromise = new Promise((resolve,reject) =>{
-	        var data = ResolveAvailability(formDataFields);
+	        let url = this.generateURL();
+	        // var data =  ResolveAvailability(url)
 	        // .then(response => {
 	        //     if (!response.ok) {
 	        //         return Promise.reject()
@@ -21584,11 +21595,26 @@
 	        // .catch(err => {
 	        //     reject("It broke");
 	        // })
+	        self = this;
+	        $.ajax({
+	            type: 'GET',
+	            url: url,
+	            contentType: 'application/json',
+	            success: function (data) {
+	                console.log('url:' + url);
+	                console.log('success:' + data[0].warehouseNumber);
+	                self.setState({ searchRes: data });
 
+	                // output=data;
+	                // console.log('output:' + output);
+	            },
+	            error: function () {
+	                console.log('failed to register');
+	            }
+	        });
 
 	        // });
 	        console.log(data);
-	        this.setState({ searchRes: data });
 	    },
 
 	    OnChangeHandler: function (e) {
@@ -21599,6 +21625,16 @@
 	    OnChangeHandler1: function (e) {
 	        e.preventDefault();
 	        this.setState({ wareHouseNumber: e.target.value });
+	    },
+
+	    getSearchParameters: function () {
+	        return searchParameter.map(function (X) {
+	            return React.createElement("option", null, X);
+	        });
+	    },
+
+	    onChangeSelect: function (e) {
+	        this.setState({ selected: e.target.value });
 	    },
 
 	    render: function () {
@@ -21615,8 +21651,13 @@
 	            onSubmit: this.OnSubmitHandler,
 	            onChangeName: this.OnChangeHandler,
 	            onChangeNumber: this.OnChangeHandler1,
-	            formSubmit: "value"
-	        }), this.state.searchRes ? React.createElement(SearchResults, { results: this.state.searchRes }) : null);
+	            formSubmit: "value",
+
+	            onChangeSelect: this.onChangeSelect,
+	            selected: this.state.selected,
+	            s1: this.getSearchParameters()
+
+	        }), this.state.searchRes != null ? React.createElement(SearchResults, { results: this.state.searchRes }) : null);
 	    }
 
 	});
@@ -21624,257 +21665,6 @@
 
 /***/ },
 /* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */ /**
-	                      * Created by sjain on 12/4/2016.
-	                      */
-	var React = __webpack_require__(2);
-
-	var WarehouseMainForm = __webpack_require__(182);
-	var SearchMainForm = __webpack_require__(183);
-
-	const ViewTestForm = React.createClass({ displayName: "ViewTestForm",
-
-	    formSubmit: function (e) {
-	        this.props.onSubmit(e);
-	    },
-
-	    render: function () {
-	        return React.createElement("div", { className: "container" }, React.createElement("div", { className: "searchMainDiv" }, React.createElement("form", { className: "", onSubmit: this.formSubmit }, React.createElement(SearchMainForm, { label: this.props.dynamicContent.wareHouseNameLabel,
-	            placeHolderText: this.props.wareHouseName,
-	            onChange: this.props.onChangeName }), React.createElement("button", { type: "submit", className: "localization__input-submit btn btn-info searchBtn",
-	            "data-submit": true }, this.props.buttonText, React.createElement("span", { className: "glyphicon glyphicon-search" })))));
-	    }
-
-	});
-	module.exports = ViewTestForm;
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */ /**
-	                      * Created by sjain on 12/5/2016.
-	                      */
-
-	var React = __webpack_require__(2);
-	const WarehouseMainForm = React.createClass({ displayName: "WarehouseMainForm",
-
-	    render: function () {
-	        return React.createElement("div", { className: "container-fluid tableFormat" }, React.createElement("div", { className: "row" }, React.createElement("div", { className: "col-sm-4" }, React.createElement("label", { id: "address-label", htmlFor: "address-label",
-	            className: ""
-	        }, this.props.label)), React.createElement("div", { className: "col-sm-8" }, React.createElement("input", {
-	            type: "text",
-	            placeholder: this.props.placeHolderText,
-	            className: "",
-	            onChange: this.props.onChange
-	        }))));
-	    }
-
-	});
-
-	module.exports = WarehouseMainForm;
-
-/***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */ /**
-	                      * Created by smita on 1/2/17.
-	                      */
-
-	var React = __webpack_require__(2);
-
-	var searchParameters = ['Customer Name', 'Warehouse Number', 'Date'];
-
-	const SearchMainForm = React.createClass({ displayName: "SearchMainForm",
-
-	    // getInitialState:function () {
-	    //
-	    //
-	    //    return {searchParameters : searchParameters};
-	    //
-	    // },
-
-	    getSearchParameters: function () {
-	        return searchParameters;
-	    },
-
-	    render: function () {
-
-	        s1 = function (X) {
-	            return React.createElement("option", null, X);
-	        };
-
-	        return React.createElement("div", { className: "container-fluid tableFormat" }, React.createElement("div", { className: "row" }, React.createElement("div", { className: "col-sm-4" }, React.createElement("select", null, this.getSearchParameters().map(s1))), React.createElement("div", { className: "col-sm-8" }, React.createElement("input", {
-	            type: "text",
-	            placeholder: this.props.placeHolderText,
-	            className: "",
-	            onChange: this.props.onChange
-	        }))));
-	    }
-
-	});
-
-	module.exports = SearchMainForm;
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */ /**
-	                      * Created by smita on 12/21/16.
-	                      */
-
-	var React = __webpack_require__(2);
-
-	const SearchResults = React.createClass({ displayName: "SearchResults",
-
-	    render: function () {
-
-	        var values = this.props.results.map(function (value) {
-	            return React.createElement("div", null, React.createElement("span", null, value.customerName, "  "), React.createElement("span", null, value.warehouseNumber, "  "), React.createElement("span", null, value.date, "  "), React.createElement("button", null, " book"), React.createElement("br", null), React.createElement("div", null, "-------------------------------------------------"));
-	        });
-
-	        return React.createElement("div", { className: "container" },
-	        /*{this.props.results.map(function(name, index){*/
-	        /*return <li key={ index }>{name}</li>;*/
-	        /*})}*/
-	        React.createElement("br", null), React.createElement("br", null), React.createElement("div", null, "************************************"), React.createElement("div", null, "Welcome to search results"), React.createElement("div", null, React.createElement("span", null, "Customer Name  "), React.createElement("span", null, "Warehouse Number   "), React.createElement("span", null, "Date  "), React.createElement("button", null, " book")),
-
-	        /*{JSON.stringify(this.props.results)};*/
-	        values, ";");
-	    }
-
-	});
-	module.exports = SearchResults;
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */ /**
-	                      * Created by smita on 12/27/16.
-	                      */
-
-	var React = __webpack_require__(2);
-
-	const HeaderSection = React.createClass({ displayName: "HeaderSection",
-
-	    render: function () {
-
-	        return React.createElement("div", { className: "container" }, React.createElement("h1", { className: "header" }, "Warehouse Management Online Portal"));
-	    }
-
-	});
-	module.exports = HeaderSection;
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */ /**
-	                      * Created by sjain on 12/11/2016.
-	                      */
-
-	const WareHouse = __webpack_require__(187);
-	const $ = __webpack_require__(188);
-
-	const ResolveAvailability = function (formdata) {
-
-	  const url = "https://product-cat.herokuapp.com/products";
-	  const DEFAULT_TIMEOUT = 10000;
-
-	  // const detailsPromise = new Promise((resolve, reject) => {
-
-	  //     $.ajax({
-	  //         type: 'GET',
-	  //         url: url,
-	  //         contentType: 'application/json',
-	  //         success : function (data) {
-	  //             console.log('url' + url);
-	  //             console.log('success' + data);
-	  //             resolve();
-	  //         },
-	  //     error : function () {
-	  //         console.log('failed to register');
-	  //         reject();
-	  //     }
-	  //     })
-	  //
-	  // })
-
-	  let output = WareHouse.getDetails(formdata);
-
-	  //     .then(response =>{
-	  //     console.log("A successful response was received from WareHouseDetals.");
-	  //         resolve(response);
-	  // })
-	  //    .catch(error =>{
-	  //        console.log("A Failed response was received from WareHouseDetals.");
-	  //        reject(error);
-	  //    })
-
-	  // });
-	  //     return detailsPromise;
-	  return output;
-	};
-	module.exports = ResolveAvailability;
-
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @jsx React.DOM */ /**
-	                      * Created by sjain on 12/11/2016.
-	                      */
-	var $ = __webpack_require__(188);
-
-	const DEFAULT_TIMEOUT = 10000;
-	const url = "http://localhost:9000/warehouse/wareHouseNumberDetails/";
-	let output = '';
-	function WareHouse() {}
-
-	Object.defineProperty(WareHouse.prototype, "getDetails", { writable: true, configurable: true, value: function (formData) {
-	        "use strict";
-	        // $.ajax({
-	        //      type: 'POST',
-	        //     url: url,
-	        //     data: formData,
-	        //     contentType: 'application/json',
-	        //     success: function (data) {
-	        //         console.log('url:' + url);
-	        //         console.log('success:' + data[0].warehouseNumber);
-	        //         output=data;
-	        //     },
-	        //     error: function () {
-	        //         console.log('failed to register');
-	        //     }
-	        // })
-
-	        $.ajax({
-	            type: 'GET',
-	            url: url,
-	            data: { "wareHouseNumber": "233" },
-	            contentType: 'application/json',
-	            success: function (data) {
-	                console.log('url:' + url);
-	                console.log('success:' + data[0].warehouseNumber);
-	                output = data;
-	            },
-	            error: function () {
-	                console.log('failed to register');
-	            }
-	        });
-
-	        return output;
-	    } });
-
-	module.exports = new WareHouse();
-
-/***/ },
-/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -32100,6 +31890,282 @@
 
 
 /***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */ /**
+	                      * Created by sjain on 12/4/2016.
+	                      */
+	var React = __webpack_require__(2);
+
+	var WarehouseMainForm = __webpack_require__(183);
+	var SearchMainForm = __webpack_require__(184);
+
+	const ViewTestForm = React.createClass({ displayName: "ViewTestForm",
+
+	    formSubmit: function (e) {
+	        this.props.onSubmit(e);
+	    },
+
+	    render: function () {
+	        return React.createElement("div", { className: "container" }, React.createElement("div", { className: "searchMainDiv" }, React.createElement("form", { className: "", onSubmit: this.formSubmit }, React.createElement(SearchMainForm, { label: this.props.dynamicContent.wareHouseNameLabel,
+	            placeHolderText: this.props.wareHouseName,
+	            onChange: this.props.onChangeName,
+	            onChangeSelect: this.props.onChangeSelect,
+	            selected: this.props.selected,
+	            s1: this.props.s1 }), React.createElement("button", { type: "submit", className: "localization__input-submit btn btn-info searchBtn",
+	            "data-submit": true }, this.props.buttonText, React.createElement("span", { className: "glyphicon glyphicon-search" })))));
+	    }
+
+	});
+	module.exports = ViewTestForm;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */ /**
+	                      * Created by sjain on 12/5/2016.
+	                      */
+
+	var React = __webpack_require__(2);
+	const WarehouseMainForm = React.createClass({ displayName: "WarehouseMainForm",
+
+	    render: function () {
+	        return React.createElement("div", { className: "container-fluid tableFormat" }, React.createElement("div", { className: "row" }, React.createElement("div", { className: "col-sm-4" }, React.createElement("label", { id: "address-label", htmlFor: "address-label",
+	            className: ""
+	        }, this.props.label)), React.createElement("div", { className: "col-sm-8" }, React.createElement("input", {
+	            type: "text",
+	            placeholder: this.props.placeHolderText,
+	            className: "",
+	            onChange: this.props.onChange
+	        }))));
+	    }
+
+	});
+
+	module.exports = WarehouseMainForm;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */ /**
+	                      * Created by smita on 1/2/17.
+	                      */
+
+	var React = __webpack_require__(2);
+
+	// var searchParameters = [
+	//     'Customer Name',
+	//     'Warehouse Number',
+	//     'Date'
+	// ];
+
+	const SearchMainForm = React.createClass({ displayName: "SearchMainForm",
+
+	    // getInitialState:function () {
+	    //
+	    //
+	    //    return {selected : ""};
+	    //
+	    // },
+	    //
+	    // getSearchParameters: function() {
+	    //     return searchParameters;
+	    // },
+	    //
+	    // handleSearchOptions: function(e){
+	    //     this.setState({selected: e.target.value});
+	    // },
+
+	    render: function () {
+
+	        // s1 =function (X) {
+	        //     return <option>{X}</option>
+	        //
+	        // }
+
+	        return React.createElement("div", { className: "container-fluid tableFormat" }, React.createElement("div", { className: "row" }, React.createElement("div", { className: "col-sm-4" }, React.createElement("select", { onChange: this.props.onChangeSelect,
+	            value: this.props.selected }, this.props.s1)), React.createElement("div", { className: "col-sm-8" }, React.createElement("input", {
+	            type: "text",
+	            placeholder: this.props.placeHolderText,
+	            className: "",
+	            onChange: this.props.onChange
+	        }), React.createElement("label", null, this.props.selected, " ", this.props.placeHolderText))));
+	    }
+
+	});
+
+	module.exports = SearchMainForm;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */ /**
+	                      * Created by smita on 12/21/16.
+	                      */
+
+	var React = __webpack_require__(2);
+
+	const SearchResults = React.createClass({ displayName: "SearchResults",
+
+	    render: function () {
+
+	        var values = this.props.results.map(function (value) {
+	            return React.createElement("div", null, React.createElement("span", null, value.customerName, "  "), React.createElement("span", null, value.warehouseNumber, "  "), React.createElement("span", null, value.date, "  "), React.createElement("button", null, " book"), React.createElement("br", null), React.createElement("div", null, "-------------------------------------------------"));
+	        });
+
+	        return React.createElement("div", { className: "container" },
+	        /*{this.props.results.map(function(name, index){*/
+	        /*return <li key={ index }>{name}</li>;*/
+	        /*})}*/
+	        React.createElement("br", null), React.createElement("br", null), React.createElement("div", null, "************************************"), React.createElement("div", null, "Welcome to search results"), React.createElement("div", null, React.createElement("span", null, "Customer Name  "), React.createElement("span", null, "Warehouse Number   "), React.createElement("span", null, "Date  "), React.createElement("button", null, " book")),
+
+	        /*{JSON.stringify(this.props.results)};*/
+	        values, ";");
+	    }
+
+	});
+	module.exports = SearchResults;
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */ /**
+	                      * Created by smita on 12/27/16.
+	                      */
+
+	var React = __webpack_require__(2);
+
+	const HeaderSection = React.createClass({ displayName: "HeaderSection",
+
+	    render: function () {
+
+	        return React.createElement("div", { className: "container" }, React.createElement("h1", { className: "header" }, "Warehouse Management Online Portal"));
+	    }
+
+	});
+	module.exports = HeaderSection;
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */ /**
+	                      * Created by sjain on 12/11/2016.
+	                      */
+
+	const WareHouse = __webpack_require__(188);
+	const $ = __webpack_require__(181);
+
+	const ResolveAvailability = function (formdata) {
+
+	  //
+	  // const url = "https://product-cat.herokuapp.com/products";
+	  // const DEFAULT_TIMEOUT = 10000;
+
+
+	  // const detailsPromise = new Promise((resolve, reject) => {
+
+	  //     $.ajax({
+	  //         type: 'GET',
+	  //         url: url,
+	  //         contentType: 'application/json',
+	  //         success : function (data) {
+	  //             console.log('url' + url);
+	  //             console.log('success' + data);
+	  //             resolve();
+	  //         },
+	  //     error : function () {
+	  //         console.log('failed to register');
+	  //         reject();
+	  //     }
+	  //     })
+	  //
+	  // })
+
+	  let output = WareHouse.getDetails(formdata);
+
+	  //     .then(response =>{
+	  //     console.log("A successful response was received from WareHouseDetals.");
+	  //         resolve(response);
+	  // })
+	  //    .catch(error =>{
+	  //        console.log("A Failed response was received from WareHouseDetals.");
+	  //        reject(error);
+	  //    })
+
+	  // });
+	  //     return detailsPromise;
+	  return output;
+	};
+	module.exports = ResolveAvailability;
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */ /**
+	                      * Created by sjain on 12/11/2016.
+	                      */
+	var $ = __webpack_require__(181);
+
+	const DEFAULT_TIMEOUT = 10000;
+
+	function WareHouse() {}
+
+	Object.defineProperty(WareHouse.prototype, "getDetails", { writable: true, configurable: true, value: function (url) {
+	        "use strict";
+	        // $.ajax({
+	        //      type: 'POST',
+	        //     url: url,
+	        //     data: formData,
+	        //     contentType: 'application/json',
+	        //     success: function (data) {
+	        //         console.log('url:' + url);
+	        //         console.log('success:' + data[0].warehouseNumber);
+	        //         output=data;
+	        //     },
+	        //     error: function () {
+	        //         console.log('failed to register');
+	        //     }
+	        // })
+	        // let data =[];
+	        // data = Object.keys(formData).map(key => formData[key])
+	        //
+	        // const url = "http://localhost:9000/warehouse/wareHouseNumber/" +data[0];
+	        // console.log(Object.keys(formData).map(key => formData[key]));
+
+	        console.log('url:' + url);
+	        function testAjax() {
+
+	            return $.ajax({
+	                type: 'GET',
+	                url: url,
+	                contentType: 'application/json',
+	                success: function (data) {
+	                    console.log('url:' + url);
+	                    console.log('success:' + data[0].warehouseNumber);
+
+	                    // output=data;
+	                    // console.log('output:' + output);
+	                },
+	                error: function () {
+	                    console.log('failed to register');
+	                }
+	            });
+	        }
+
+	        var output = testAjax();
+	        return output;
+	    } });
+
+	module.exports = new WareHouse();
+
+/***/ },
 /* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -32108,7 +32174,7 @@
 	                      */
 
 	var React = __webpack_require__(2);
-	const $ = __webpack_require__(188);4;
+	const $ = __webpack_require__(181);4;
 	const url = "http://localhost:9000/warehouse";
 
 	var FindWarehouseForm = React.createClass({ displayName: "FindWarehouseForm",

@@ -7,9 +7,9 @@ const $ = require('jquery');
 
  const ResolveAvailability = (formdata) =>{
 
-
-     const url = "https://product-cat.herokuapp.com/products";
-     const DEFAULT_TIMEOUT = 10000;
+     //
+     // const url = "https://product-cat.herokuapp.com/products";
+     // const DEFAULT_TIMEOUT = 10000;
 
 
     // const detailsPromise = new Promise((resolve, reject) => {
@@ -32,6 +32,7 @@ const $ = require('jquery');
     // })
 
    let output=  WareHouse.getDetails(formdata)
+
 
     //     .then(response =>{
     //     console.log("A successful response was received from WareHouseDetals.");
