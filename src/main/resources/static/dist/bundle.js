@@ -31993,7 +31993,9 @@
 	            placeholder: this.props.placeHolderText,
 	            className: "",
 	            onChange: this.props.onChange
-	        }), React.createElement("label", null, this.props.selected, " ", this.props.placeHolderText))));
+	        })
+	        /*<label>{this.props.selected} {this.props.placeHolderText}</label>*/
+	        )));
 	    }
 
 	});

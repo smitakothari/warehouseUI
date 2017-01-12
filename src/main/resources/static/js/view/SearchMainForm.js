@@ -53,7 +53,7 @@ const SearchMainForm = React.createClass({
                             className=""
                             onChange={this.props.onChange}
                         ></input>
-                        <label>{this.props.selected} {this.props.placeHolderText}</label>
+                        {/*<label>{this.props.selected} {this.props.placeHolderText}</label>*/}
                     </div>
                 </div>
             </div>
