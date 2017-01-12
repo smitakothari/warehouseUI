@@ -21512,7 +21512,7 @@
 	var HeaderSection = __webpack_require__(186);
 	const ResolveAvailability = __webpack_require__(187);
 
-	var searchParameter = ['Customer Name', 'Warehouse Number', 'Date'];
+	var searchParameter = ['Customer Name', 'Warehouse Number', 'Date', 'All'];
 
 	const OBJECT_PROP_DEFAULTS = {
 	    defaultValues: {
@@ -21614,7 +21614,8 @@
 	        });
 
 	        // });
-	        console.log(data);
+	        //console.log(data);
+
 	    },
 
 	    OnChangeHandler: function (e) {
@@ -32014,17 +32015,37 @@
 	    render: function () {
 
 	        var values = this.props.results.map(function (value) {
-	            return React.createElement("div", null, React.createElement("span", null, value.customerName, "  "), React.createElement("span", null, value.warehouseNumber, "  "), React.createElement("span", null, value.date, "  "), React.createElement("button", null, " book"), React.createElement("br", null), React.createElement("div", null, "-------------------------------------------------"));
+	            return React.createElement("div", { className: "row searchResRow" }, React.createElement("div", { className: "col-sm-4" }, value.customerName), React.createElement("div", { className: "col-sm-4" }, value.warehouseNumber), React.createElement("div", { className: "col-sm-4" }, value.date))
+
+	            // <div>
+	            //                       <span>{value.customerName }  </span>
+	            //                       <span>{value.warehouseNumber }  </span>
+	            //                       <span>{value.date }  </span>
+	            //     <button> book</button>
+	            //     <br></br>
+	            //     <div>-------------------------------------------------</div>
+	            // </div>
+	            ;
 	        });
 
-	        return React.createElement("div", { className: "container" },
+	        return React.createElement("div", { className: "container searchResult" }, React.createElement("h3", { className: "searchResHeading" }, "Search Results"), React.createElement("div", null, React.createElement("div", { className: "row searchResHeader" }, React.createElement("div", { className: "col-sm-4" }, "Customer Name"), React.createElement("div", { className: "col-sm-4" }, "Warehouse Number"), React.createElement("div", { className: "col-sm-4" }, "Date"))),
+
 	        /*{this.props.results.map(function(name, index){*/
 	        /*return <li key={ index }>{name}</li>;*/
 	        /*})}*/
-	        React.createElement("br", null), React.createElement("br", null), React.createElement("div", null, "************************************"), React.createElement("div", null, "Welcome to search results"), React.createElement("div", null, React.createElement("span", null, "Customer Name  "), React.createElement("span", null, "Warehouse Number   "), React.createElement("span", null, "Date  "), React.createElement("button", null, " book")),
+	        /*<br></br>*/
+	        /*<br></br>*/
+	        /*<div>************************************</div>*/
+	        /*<div>Welcome to search results</div>*/
+	        /*<div>*/
+	        /*<span>Customer Name  </span>*/
+	        /*<span>Warehouse Number   </span>*/
+	        /*<span>Date  </span>*/
+	        /*<button> book</button>*/
+	        /*</div>*/
 
 	        /*{JSON.stringify(this.props.results)};*/
-	        values, ";");
+	        values);
 	    }
 
 	});

@@ -13,7 +13,9 @@ const ResolveAvailability = require("../services/Details");
 var  searchParameter = [
     'Customer Name',
     'Warehouse Number',
-    'Date'];
+    'Date',
+    'All',
+];
 
 const OBJECT_PROP_DEFAULTS = {
     defaultValues: {
@@ -117,7 +119,7 @@ const TestForm = React.createClass({
 
 
         // });
-        console.log(data);
+        //console.log(data);
 
 
 

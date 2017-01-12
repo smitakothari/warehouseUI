@@ -30,3 +30,22 @@ body{
     margin-top: 5%;
     margin-left: 20%;
 }
+.searchResult{
+    padding: 0% 10% 10% 20%;
+}
+.searchResHeader{
+    border-style: inset;
+    font-family: serif;
+    font-family: serif;
+    font-weight: bold;
+    font-size: medium;
+    color: #2e6da4;
+}
+.searchResRow{
+    border-style: inset;
+}
+.searchResHeading{
+    text-align: center;
+    color: #ef1e1e;
+    font-family: Serif;
+}
