@@ -21553,7 +21553,7 @@
 	    },
 
 	    generateURL: function () {
-	        let url = "http://localhost:9000/warehouse/" + this.state.selected + "/" + this.state.wareHouseName;
+	        let url = "https://product-cat.herokuapp.com/warehouse/" + this.state.selected + "/" + this.state.wareHouseName;
 	        return url;
 	    },
 
